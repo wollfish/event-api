@@ -1,22 +1,46 @@
-# EventApi
+# EventAPI
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/event_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+It's a ruby gem to generate events (for example: generate events for executing particular tasks like sending emails).
 
 ## Installation
 
-Install the gem and add to the application's Gemfile by executing:
+Add to the application's Gemfile:
 
-    $ bundle add event_api
+```
+gem 'event_api', git: 'https://github.com/wollfish/event-api'
+```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+## Setup
 
-    $ gem install event_api
+Add EventAPI module in Project initializer.
+
+```ruby
+module EventAPI
+  class << self
+    def notify(event_name, event_payload)
+      @event_api ||= EventApi.configure(
+        application_name: Rails.application.class.name.split('::').first.underscore,
+        jwt_algorithm: ENV.fetch('EVENT_API_JWT_ALGORITHM', 'RS256'),
+        jwt_private_key: P2P::App.config.p2p_jwt_private_key,
+        rabbitmq_credentials: {
+          host: ENV.fetch('EVENT_API_RABBITMQ_HOST', 'localhost'),
+          port: ENV.fetch('EVENT_API_RABBITMQ_PORT', '5672'),
+          username: ENV.fetch('EVENT_API_RABBITMQ_USERNAME', 'guest'),
+          password: ENV.fetch('EVENT_API_RABBITMQ_PASSWORD', 'guest')
+        }
+      )
+
+      @event_api.notify(event_name, event_payload)
+    end
+  end
+end
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+EventAPI.notify('admin_notify.document.verify', record: { data: 'Testing Data' })
+```
 
 ## Development
 
@@ -26,4 +50,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/event_api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/wollfish/event-api.

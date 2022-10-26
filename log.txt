@@ -1,2 +1,0 @@
-# Logfile created on 2022-09-14 18:52:49 +0530 by logger.rb/v1.5.1
-E, [2022-09-14T18:52:49.370524 #18615] ERROR -- : ---------------error-----------------------undefined method `debug' for nil:NilClass
