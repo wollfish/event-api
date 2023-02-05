@@ -3,21 +3,16 @@ require:
   - rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.6
-
-Layout/LineLength:
-  Max: 120
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'public/**/*'
+    - 'storage/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
 
 RSpec/ExampleLength:
-  Max: 10
+  Max: 10 # 5
 
 Style/Documentation:
   Enabled: false
-
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
-
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes

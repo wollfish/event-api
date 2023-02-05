@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "event_api/version"
+require_relative 'event_api/version'
 
-require "bunny"
-require "jwt-multisig"
-require "memoist"
-require "securerandom"
+require 'bunny'
+require 'jwt-multisig'
+require 'memoist'
+require 'securerandom'
 
 module EventApi
   class << self
@@ -133,7 +133,7 @@ module EventApi
       #  - event_api.events.push_notify
       #
       def exchange_name(event_name)
-        "#{@application_name}.events.#{event_name.split(".").first}"
+        "#{@application_name}.events.#{event_name.split('.').first}"
       end
 
       # example event name are defined in the beginning of this class.
@@ -143,7 +143,7 @@ module EventApi
       #  - withdraw.succeed
       #
       def routing_key(event_name)
-        event_name.split(".").drop(1).join(".")
+        event_name.split('.').drop(1).join('.')
       end
     end
   end
